@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/home/rick/dev30/batfish-flow-checker/venv/bin/python3.6",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}

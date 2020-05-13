@@ -1,0 +1,3 @@
+[console_scripts]
+netconan = netconan.netconan:main
+

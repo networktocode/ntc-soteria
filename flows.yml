@@ -1,0 +1,15 @@
+- source_ip: 1.1.1.1
+  dest_ip: 1.1.1.1
+  dest_port: 1.1.1.1
+  proto: udp
+  action: permit
+- source_ip: 1.1.1.1
+  dest_ip: 1.1.1.1
+  dest_port: 1.1.1.1
+  proto: udp
+  action: permit
+- source_ip: 1.1.1.1
+  dest_ip: 1.1.1.1
+  dest_port: 1.1.1.1
+  proto: udp
+  action: permit
