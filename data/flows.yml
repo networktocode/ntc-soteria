@@ -1,0 +1,13 @@
+- source_ip: 10.0.0.0/8 
+  dest_ip: 8.8.8.8/32
+  proto: ip
+  action: deny
+- source_ip: 11.36.216.176/32
+  dest_ip: 11.36.216.0/24
+  proto: ip
+  action: permit
+- source_ip: 10.36.176.0/24
+  dest_ip: 11.20.0.0/16
+  dest_port: range 1000 20000
+  proto: tcp
+  action: permit
