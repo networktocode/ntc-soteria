@@ -61,8 +61,6 @@ if __name__ == "__main__":
 
     batfish_host = os.getenv("BATFISH_SERVICE_HOST")
 
-    device_flows = DeviceFlows(
-        config_file, flows_file, acl_name, "fw1", batfish_host
-    )
+    device_flows = DeviceFlows(config_file, flows_file, acl_name, "fw1", batfish_host)
     device_flows.compare_filters()
     print(device_flows.answer.frame())
