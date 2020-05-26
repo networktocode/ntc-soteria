@@ -3,5 +3,5 @@ WIP
 
 ## Example
 ```
-python acl_auditor/auditor.py -c data/asa.cfg -f data/flows.yml -a acl-inside
+BATFISH_SERVICE_HOST=localhost python acl_auditor/auditor.py -c data/asa.cfg -f data/flows.yml -a acl-inside
 ```
