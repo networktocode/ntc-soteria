@@ -32,13 +32,16 @@ class DeviceFlows:
         )
 
     def _create_reference_snapshot(self):
-        reference_acl = create_acl_from_yaml(flows_file, self.hostname, self.acl_name)
+        platform = "juniper-srx"
+        reference_acl = create_acl_from_yaml(flows_file, self.hostname, self.acl_name, platform)
+        print(reference_acl)
         bf_session.init_snapshot_from_text(
             reference_acl,
-            platform="cisco-nx",
+            platform=platform,
             snapshot_name="reference",
             overwrite=True,
         )
+        print(bfq.initIssues().answer(snapshot="reference").frame())
 
     def compare_filters(self):
         self._create_base_snapshot()
