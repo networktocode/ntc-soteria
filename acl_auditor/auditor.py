@@ -1,6 +1,7 @@
 import argparse
 import logging
 import os
+import sys
 
 from dotenv import load_dotenv
 from helpers import create_acl_from_yaml, read_file
@@ -39,6 +40,13 @@ class DeviceFlows:
             snapshot_name="reference",
             overwrite=True,
         )
+        df = bfq.initIssues().answer(snapshot="reference").frame()
+        if len(df) != 0:
+            print(
+                "WARNING: Reference snapshot was not cleanly initialized, likely due to errors in input flow data. Context for problematic ACL lines (after conversion) is show below",
+                file=sys.stderr)
+            print(df, file=sys.stderr)
+            print("\n", file=sys.stderr)
 
     def compare_filters(self):
         self._create_base_snapshot()
