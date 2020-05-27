@@ -29,11 +29,12 @@ class DeviceFlows:
         bf_session.init_snapshot_from_text(
             self.config_file, snapshot_name="base", overwrite=True
         )
+
+    def _get_hostname(self):
         df = bfq.nodeProperties().answer(snapshot="base").frame()
         if len(df) != 1:
             raise RuntimeError("Could not find a hostname in the config file")
-        return df.iloc[0]['Node']
-
+        return df.iloc[0]["Node"]
 
     def _create_reference_snapshot(self, hostname):
         reference_acl = create_acl_from_yaml(flows_file, hostname, self.acl_name)
@@ -45,7 +46,8 @@ class DeviceFlows:
         )
 
     def compare_filters(self):
-        hostname = self._create_base_snapshot()
+        self._create_base_snapshot()
+        hostname = self._get_hostname()
         self._create_reference_snapshot(hostname)
         self.answer = bfq.compareFilters().answer(
             snapshot="base", reference_snapshot="reference"
