@@ -70,14 +70,13 @@ def generate_acl_syntax_juniper_srx(reference_flows=None, hostname=None, filter_
         term_number += 1
 
     acl_lines.append(
-        "set firewall family inet filter {} term term{}-default-deny then discard".format(filter_name, term_number))
+        "set firewall family inet filter {} term default-deny then discard".format(filter_name, term_number))
     return "\n".join(acl_lines)
 
 
 def _generate_acl_term_juniper_srx(reference_flow, filter_name, term_number):
     term_lines = []
-    term_name = reference_flow["name"] if "name" in reference_flow else _get_default_term_name(reference_flow,
-                                                                                               term_number)
+    term_name = _get_term_name(reference_flow, term_number)
     if "source_ip" in reference_flow:
         term_lines.append(
             "set firewall family inet filter {} term {} from source-address {}".format(filter_name, term_name,
@@ -110,11 +109,11 @@ def _generate_acl_term_juniper_srx(reference_flow, filter_name, term_number):
     return term_lines
 
 
-def _get_default_term_name(reference_flow, term_number):
-    term_name = "term{}".format(term_number)
-    if "source_ip" in reference_flow:
-        term_name = term_name + "-from-{}".format(reference_flow["source_ip"])
-    if "dest_ip" in reference_flow:
-        term_name = term_name + "-to-{}".format(reference_flow["dest_ip"])
-    # TODO: should we add more fields to the default term name?
-    return term_name
+def _get_term_name(reference_flow, term_number):
+    return "\"{} ({} {} {} {} {} {})\"".format(reference_flow.get("name", "flow{}".format(term_number)),
+                                               reference_flow.get("source_ip", "any"),
+                                               reference_flow.get("source_port", "any"),
+                                               reference_flow.get("dest_ip", "any"),
+                                               reference_flow.get("dest_port", "any"),
+                                               reference_flow.get("proto", "ip"),
+                                               reference_flow.get("action", "accept"))
