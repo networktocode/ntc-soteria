@@ -38,17 +38,18 @@ class DeviceFlows:
         return df.iloc[0]["Node"]
 
     def _create_reference_snapshot(self, hostname):
-        reference_acl = create_acl_from_yaml(flows_file, hostname, self.acl_name)
+        platform = "juniper-srx"
+        reference_acl = create_acl_from_yaml(flows_file, hostname, self.acl_name, platform)
         bf_session.init_snapshot_from_text(
             reference_acl,
-            platform="cisco-nx",
+            platform=platform,
             snapshot_name="reference",
             overwrite=True,
         )
         df = bfq.initIssues().answer(snapshot="reference").frame()
         if len(df) != 0:
             print(
-                "WARNING: Reference snapshot was not cleanly initialized, likely due to errors in input flow data. Context for problematic ACL lines (after conversion) is show below",
+                "WARNING: Reference snapshot was not cleanly initialized, likely due to errors in input flow data. Context for problematic ACL lines (after conversion) is show below.",
                 file=sys.stderr)
             print(df, file=sys.stderr)
             print("\n", file=sys.stderr)
