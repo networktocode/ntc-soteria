@@ -5,8 +5,7 @@ import sys
 
 from dotenv import load_dotenv
 from helpers import create_acl_from_yaml, read_file
-from pybatfish.client.commands import *
-from pybatfish.datamodel.flow import HeaderConstraints, PathConstraints
+from pybatfish.client.commands import bf_session
 from pybatfish.question import bfq
 from pybatfish.question.question import load_questions
 
@@ -39,18 +38,18 @@ class DeviceFlows:
 
     def _create_reference_snapshot(self, hostname):
         platform = "juniper-srx"
-        reference_acl = create_acl_from_yaml(flows_file, hostname, self.acl_name, platform)
+        reference_acl = create_acl_from_yaml(
+            flows_file, hostname, self.acl_name, platform
+        )
         bf_session.init_snapshot_from_text(
-            reference_acl,
-            platform=platform,
-            snapshot_name="reference",
-            overwrite=True,
+            reference_acl, platform=platform, snapshot_name="reference", overwrite=True,
         )
         df = bfq.initIssues().answer(snapshot="reference").frame()
         if len(df) != 0:
             print(
                 "WARNING: Reference snapshot was not cleanly initialized, likely due to errors in input flow data. Context for problematic ACL lines (after conversion) is show below.",
-                file=sys.stderr)
+                file=sys.stderr,
+            )
             print(df, file=sys.stderr)
             print("\n", file=sys.stderr)
 
@@ -79,3 +78,4 @@ if __name__ == "__main__":
     device_flows = DeviceFlows(config_file, flows_file, acl_name, batfish_host)
     device_flows.compare_filters()
     print(device_flows.answer.frame())
+    print(device_flows.answer.frame().to_dict())
