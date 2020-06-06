@@ -1,0 +1,154 @@
+<html>
+  <head>
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+    <link rel="stylesheet"
+      href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+      integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX"
+      crossorigin="anonymous"><script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+      integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+      crossorigin="anonymous"></script>
+    <script
+      src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+      integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+      crossorigin="anonymous"></script>
+
+    <style>
+    .table thead th {
+         color: black;
+    } 
+        .bd-placeholder-img {
+          font-size: 1.125rem;
+          text-anchor: middle;
+          -webkit-user-select: none;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          user-select: none;
+        }
+  
+        @media (min-width: 768px) {
+          .bd-placeholder-img-lg {
+            font-size: 3.5rem;
+          }
+        }
+        html {
+      font-size: 14px;
+    }
+    @media (min-width: 768px) {
+      html {
+        font-size: 16px;
+      }
+    }
+
+    .container {
+      max-width: 95%;
+    }
+
+    .pricing-header {
+      max-width: 700px;
+    }
+
+    .card-deck .card {
+      min-width: 220px;
+    }
+
+    .nav {
+    background-color:#3f51b5!important;
+    color:white;
+    }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="nav d-flex flex-column flex-md-row align-items-center p-3
+      px-md-4
+      mb-3 bg-white border-bottom shadow-sm">
+      <h3 class="my-0 mr-md-auto font-weight-normal">ACL Auditor</h3>
+
+    </div>
+
+    <div class="container">
+      <div class="card-deck mb-3">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Reference Rules</h4>
+          </div>
+          <div class="card-body">
+            <pre>---
+- source_ip: 10.0.0.0/8
+  dest_ip: 8.8.8.8/32
+  proto: ip
+  action: deny
+  name: to-google-dns
+- source_ip: 11.36.216.176/32
+  dest_ip: 11.36.216.0/24
+  proto: ip
+  action: permit
+  name: from-11-36-216-176
+- source_ip: 10.36.176.0/24
+  dest_ip: 11.20.0.0/16
+  dest_port: 1000-20000
+  proto: tcp
+  action: permit
+</pre>
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+      <div class="card-deck mb-3">
+        <div class="card mb-3 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Audit Results</h4>
+          </div>
+          <div class="card-body">
+            <table class='table table-sm'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Node</th>
+      <th>Filter_Name</th>
+      <th>Implemented_Line_Index</th>
+      <th>Implemented_Line_Content</th>
+      <th>Implemented_Line_Action</th>
+      <th>Reference_Line_Index</th>
+      <th>Reference_Line_Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>fw1</td>
+      <td>acl-inside</td>
+      <td>0</td>
+      <td>deny ip any4 any4</td>
+      <td>DENY</td>
+      <td>1</td>
+      <td>"from-11-36-216-176 (11.36.216.176/32 any 11.36.216.0/24 any ip permit)"</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>fw1</td>
+      <td>acl-inside</td>
+      <td>0</td>
+      <td>deny ip any4 any4</td>
+      <td>DENY</td>
+      <td>2</td>
+      <td>"flow3 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)"</td>
+    </tr>
+  </tbody>
+</table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
