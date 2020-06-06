@@ -79,7 +79,23 @@
             <h4 class="my-0 font-weight-normal">Reference Rules</h4>
           </div>
           <div class="card-body">
-            <pre>{{ reference_flows}}</pre>
+            <pre>---
+- source_ip: 10.0.0.0/8
+  dest_ip: 8.8.8.8/32
+  proto: ip
+  action: deny
+  name: to-google-dns
+- source_ip: 11.36.216.176/32
+  dest_ip: 11.36.216.0/24
+  proto: ip
+  action: permit
+  name: from-11-36-216-176
+- source_ip: 10.36.176.0/24
+  dest_ip: 11.20.0.0/16
+  dest_port: 1000-20000
+  proto: tcp
+  action: permit
+</pre>
 
           </div>
         </div>
@@ -94,7 +110,42 @@
             <h4 class="my-0 font-weight-normal">Audit Results</h4>
           </div>
           <div class="card-body">
-            {{ audit_results }}
+            <table class='table table-sm'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>Node</th>
+      <th>Filter_Name</th>
+      <th>Implemented_Line_Index</th>
+      <th>Implemented_Line_Content</th>
+      <th>Implemented_Line_Action</th>
+      <th>Reference_Line_Index</th>
+      <th>Reference_Line_Content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>fw1</td>
+      <td>acl-inside</td>
+      <td>0</td>
+      <td>deny ip any4 any4</td>
+      <td>DENY</td>
+      <td>1</td>
+      <td>"from-11-36-216-176 (11.36.216.176/32 any 11.36.216.0/24 any ip permit)"</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>fw1</td>
+      <td>acl-inside</td>
+      <td>0</td>
+      <td>deny ip any4 any4</td>
+      <td>DENY</td>
+      <td>2</td>
+      <td>"flow3 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)"</td>
+    </tr>
+  </tbody>
+</table>
           </div>
         </div>
       </div>

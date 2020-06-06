@@ -5,6 +5,7 @@ import sys
 
 from dotenv import load_dotenv
 from helpers import create_acl_from_yaml, read_file
+from reporter import generate_html_report, display_results
 from pybatfish.client.commands import bf_session
 from pybatfish.question import bfq
 from pybatfish.question.question import load_questions
@@ -14,7 +15,7 @@ load_dotenv()
 logging.getLogger("pybatfish").setLevel(logging.CRITICAL)
 
 
-class DeviceFlows:
+class FlowAuditor:
     def __init__(self, config_file, flows_file, acl_name, batfish_host):
         self.init_session(batfish_host)
         self.config_file = config_file
@@ -57,7 +58,7 @@ class DeviceFlows:
         self._create_base_snapshot()
         hostname = self._get_hostname()
         self._create_reference_snapshot(hostname)
-        self.answer = bfq.compareFilters().answer(
+        return bfq.compareFilters().answer(
             snapshot="base", reference_snapshot="reference"
         )
 
@@ -67,6 +68,7 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--config", help="config", required=True)
     parser.add_argument("-f", "--flows", help="flows", required=True)
     parser.add_argument("-a", "--acl_name", help="acl_name", required=True)
+
     args = vars(parser.parse_args())
 
     config_file = read_file(args["config"])
@@ -75,7 +77,7 @@ if __name__ == "__main__":
 
     batfish_host = os.getenv("BATFISH_SERVICE_HOST")
 
-    device_flows = DeviceFlows(config_file, flows_file, acl_name, batfish_host)
-    device_flows.compare_filters()
-    print(device_flows.answer.frame())
-    print(device_flows.answer.frame().to_dict())
+    device_flows = FlowAuditor(config_file, flows_file, acl_name, batfish_host)
+    results = device_flows.compare_filters()
+    display_results(results)
+    generate_html_report(results, read_file(flows_file))
