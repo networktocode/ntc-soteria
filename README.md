@@ -4,6 +4,14 @@ NOTE: WORK IN PROGRESS
 
 This repo provides a Batfish based ACL auditor tool.
 
+## Installation
+```
+git clone git@github.com:networktocode/batfish-acl-auditor.git
+poetry add env python3.6
+poetry install
+poetry shell
+```
+
 ## Usage
 ACLs are audited against a set of flows for a given devices configuration. The audit reults then provide:
 * Permitted - Any flows that are permitted outside of the defined reference flows.
