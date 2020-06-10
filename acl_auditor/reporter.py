@@ -36,5 +36,8 @@ def display_results(results):
 
 def render_report(report_template_path, html_results, reference_flows):
     report_template = read_file(report_template_path)
-    t = Template(report_template)
-    return t.render(audit_results=html_results, reference_flows=reference_flows)
+    template = Template(report_template)
+    return template.render(
+        audit_results=html_results,
+        reference_flows=reference_flows
+    )

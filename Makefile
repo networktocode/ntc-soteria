@@ -9,6 +9,9 @@ help:
 pylint: ## Python linting via Pylint.
 	find . -name venv -prune -o -name '*.py' -exec pylint {} +
 
+flake8: ## Python linting via Flake8.
+	find . -name venv -prune -o -name '*.py' -exec flake8 {} +
+
 yamllint: ## YAML linting via Yamllint.
 	find . \( -name *.yaml -o -name *.yml \) | xargs yamllint
 

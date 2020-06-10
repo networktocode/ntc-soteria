@@ -4,11 +4,11 @@ import os
 import sys
 
 from dotenv import load_dotenv
-from helpers import create_acl_from_yaml, read_file
-from reporter import generate_html_report, display_results
 from pybatfish.client.commands import bf_session
 from pybatfish.question import bfq
 from pybatfish.question.question import load_questions
+from helpers import create_acl_from_yaml, read_file
+from reporter import display_results, generate_html_report
 
 load_dotenv()
 
@@ -32,26 +32,32 @@ class FlowAuditor:
         )
 
     def _get_hostname(self):
-        df = bfq.nodeProperties().answer(snapshot="base").frame()
-        if len(df) != 1:
+        batfish = bfq.nodeProperties().answer(snapshot="base").frame()
+        if len(batfish) != 1:
             raise RuntimeError("Could not find a hostname in the config file")
-        return df.iloc[0]["Node"]
+        return batfish.iloc[0]["Node"]
 
     def _create_reference_snapshot(self, hostname):
-        platform = "juniper-srx"
+        platform = "juniper_srx"
         reference_acl = create_acl_from_yaml(
-            flows_file, hostname, self.acl_name, platform
+            self.flows_file, hostname, self.acl_name, platform
         )
         bf_session.init_snapshot_from_text(
-            reference_acl, platform=platform, snapshot_name="reference", overwrite=True,
+            reference_acl,
+            platform=platform,
+            snapshot_name="reference",
+            overwrite=True,
         )
-        df = bfq.initIssues().answer(snapshot="reference").frame()
-        if len(df) != 0:
+        batfish = bfq.initIssues().answer(snapshot="reference").frame()
+        if len(batfish) != 0:
             print(
-                "WARNING: Reference snapshot was not cleanly initialized, likely due to errors in input flow data. Context for problematic ACL lines (after conversion) is show below.",
+                "WARNING: Reference snapshot was not cleanly initialized, \
+                    likely due to errors in input flow data. Context for \
+                        problematic ACL lines (after conversion) \
+                            is show below.",
                 file=sys.stderr,
             )
-            print(df, file=sys.stderr)
+            print(batfish, file=sys.stderr)
             print("\n", file=sys.stderr)
 
     def compare_filters(self):
@@ -71,13 +77,13 @@ if __name__ == "__main__":
 
     args = vars(parser.parse_args())
 
-    config_file = read_file(args["config"])
-    flows_file = args["flows"]
-    acl_name = args["acl_name"]
+    config = read_file(args["config"])
+    flows = args["flows"]
+    acl = args["acl_name"]
 
     batfish_host = os.getenv("BATFISH_SERVICE_HOST")
 
-    device_flows = FlowAuditor(config_file, flows_file, acl_name, batfish_host)
+    device_flows = FlowAuditor(config, flows, acl, batfish_host)
     results = device_flows.compare_filters()
     display_results(results)
-    generate_html_report(results, read_file(flows_file))
+    generate_html_report(results, read_file(flows))
