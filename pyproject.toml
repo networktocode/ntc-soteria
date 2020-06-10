@@ -4,12 +4,36 @@ version = "0.1.0"
 description = ""
 authors = ["Rick Donato <rick.donato@networktocode.com>"]
 
+[tool.black]
+line-length = 79
+target-version = ['py36']
+include = '\.pyi?$'
+exclude = '''
+
+(
+  /(
+      \.eggs         # exclude a few common directories in the
+    | \.git          # root of the project
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | _build
+    | buck-out
+    | build
+    | dist
+  )/
+)
+'''
+
 [tool.poetry.dependencies]
 python = "^3.6"
 pytest = "^5.4.3"
 pybatfish = "^2020.4.23"
 pylint = "^2.5.2"
 python-dotenv = "^0.13.0"
+flake8 = "^3.8.3"
+black = "^19.10b0"
 
 [tool.poetry.dev-dependencies]
 

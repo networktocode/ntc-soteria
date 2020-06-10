@@ -17,7 +17,6 @@ ACLs are audited against a set of flows for a given devices configuration. The a
 * Permitted - Any flows that are permitted outside of the defined reference flows.
 * Denied - Any flows that are denied that should be permitted based on the defined reference flows.
 
-## Usage
 Below shows an execution example. Once complete a HTML report will also be saved within `./data`.
 ```
 export BATFISH_SERVICE_HOST=localhost
