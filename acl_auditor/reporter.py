@@ -1,6 +1,7 @@
 import re
 from jinja2 import Template
 from helpers import read_file, write_file
+from tabulate import tabulate
 
 COMPARE_COLUMN_NAMES = [
     "Node",
@@ -42,11 +43,19 @@ def generate_html_report(
 
 def display_compare_results(results):
     results.frame().columns = COMPARE_COLUMN_NAMES
-    print(results.frame())
+    print(
+        tabulate(
+            results.frame(), headers="keys", tablefmt="psql", showindex=False
+        )
+    )
 
 
 def display_unreachable_results(results):
-    print(results.frame())
+    print(
+        tabulate(
+            results.frame(), headers="keys", tablefmt="psql", showindex=False
+        )
+    )
 
 
 def render_report(

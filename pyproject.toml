@@ -36,6 +36,7 @@ flake8 = "^3.8.3"
 black = "^19.10b0"
 jinja2 = "^2.11.2"
 rope = "^0.17.0"
+tabulate = "^0.8.7"
 
 [tool.poetry.dev-dependencies]
 

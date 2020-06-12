@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from pybatfish.client.commands import bf_session
 from pybatfish.question import bfq
 from pybatfish.question.question import load_questions
-from helpers import create_acl_from_yaml, read_file
+from helpers import create_acl_from_yaml, read_file, return_rc
 from reporter import (
     display_compare_results,
     display_unreachable_results,
@@ -100,12 +100,12 @@ if __name__ == "__main__":
     )
     parser.add_argument("-a", "--acl_name", help="acl_name", required=False)
     parser.add_argument("-o", "--output", help="output", choices=["html"])
-
     args = vars(parser.parse_args())
-    print(args)
 
     config = read_file(args["device_config"])
     acl_auditor = ACLAuditor(config, batfish_host)
+    filter_compare_results = str()
+    unreachable_results = str()
 
     if args["check"] == "compare":
         reference_flows = args["reference_flows"]
@@ -125,4 +125,11 @@ if __name__ == "__main__":
         display_unreachable_results(unreachable_results)
 
     if args["output"] == "html":
-        generate_html_report(filter_compare_results, unreachable_results, read_file(reference_flows))
+
+        generate_html_report(
+            filter_compare_results,
+            unreachable_results,
+            read_file(reference_flows),
+        )
+
+    return_rc([filter_compare_results, unreachable_results])
