@@ -1,4 +1,6 @@
 import yaml
+import sys
+import pandas as pd
 
 
 def read_file(filename):
@@ -17,6 +19,13 @@ def read_yaml(filename):
         return yaml.load(file, Loader=yaml.FullLoader)
 
 
+def return_rc(results):
+    for result in results:
+        if isinstance(result, pd.DataFrame) and result.empty:
+            return sys.exit(0)
+    return sys.exit(1)
+
+
 def create_acl_from_yaml(filename, hostname, filter_name, platform):
     reference_flows = read_yaml(filename)
     try:
@@ -31,7 +40,9 @@ def create_acl_from_yaml(filename, hostname, filter_name, platform):
     )
 
 
-def generate_acl_syntax_cisco_nx(reference_flows=None, hostname=None, filter_name=None):
+def generate_acl_syntax_cisco_nx(
+    reference_flows=None, hostname=None, filter_name=None
+):
     """
     Turns the list of reference flows into an NXOS config file with the provided hostname and filter_name.
     """
@@ -75,7 +86,9 @@ def generate_acl_syntax_juniper_srx(
     term_number = 1
 
     for flow in reference_flows:
-        acl_lines.extend(_generate_acl_term_juniper_srx(flow, filter_name, term_number))
+        acl_lines.extend(
+            _generate_acl_term_juniper_srx(flow, filter_name, term_number)
+        )
         term_number += 1
 
     acl_lines.append(
@@ -125,7 +138,8 @@ def _generate_acl_term_juniper_srx(reference_flow, filter_name, term_number):
 
     action = (
         "accept"
-        if "action" not in reference_flow or reference_flow["action"] == "permit"
+        if "action" not in reference_flow
+        or reference_flow["action"] == "permit"
         else "discard"
     )
 
