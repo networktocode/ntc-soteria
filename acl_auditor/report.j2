@@ -79,7 +79,7 @@
             <h4 class="my-0 font-weight-normal">Reference Rules</h4>
           </div>
           <div class="card-body">
-            <pre>{{ reference_flows}}</pre>
+            <pre>{{ reference_flows }}</pre>
 
           </div>
         </div>
@@ -91,10 +91,21 @@
       <div class="card-deck mb-3">
         <div class="card mb-3 shadow-sm">
           <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Audit Results</h4>
+            <h4 class="my-0 font-weight-normal">Reference Comparision Results</h4>
           </div>
           <div class="card-body">
-            {{ audit_results }}
+            {{ compare_results }}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-deck mb-3">
+        <div class="card mb-3 shadow-sm">
+          <div class="card-header">
+            <h4 class="my-0 font-weight-normal">Unreachable Results</h4>
+          </div>
+          <div class="card-body">
+            {{ unreachable_results }}
           </div>
         </div>
       </div>
