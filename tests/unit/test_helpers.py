@@ -25,7 +25,7 @@ set firewall family inet filter acl-example term default-deny then discard""" # 
 
 def test_create_acl_cisco_nx():
     generated_acl = create_acl_from_yaml(
-        "tests/test_flows.yml", "test-device", "acl-example", "cisco-nx"
+        "tests/test_flows.yml", "test-device", "acl-example", "cisco_nx"
     )
     print(generated_acl)
     assert EXPECTED_GENERATED_ACL_CISCO_NX == generated_acl
@@ -33,7 +33,7 @@ def test_create_acl_cisco_nx():
 
 def test_create_acl_juniper_srx():
     generated_acl = create_acl_from_yaml(
-        "tests/test_flows.yml", "test-device", "acl-example", "juniper-srx"
+        "tests/test_flows.yml", "test-device", "acl-example", "juniper_srx"
     )
     print(generated_acl)
     assert EXPECTED_GENERATED_ACL_JUNIPER_SRX == generated_acl
