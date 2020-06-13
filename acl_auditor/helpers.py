@@ -22,8 +22,8 @@ def read_yaml(filename):
 def return_rc(results):
     for result in results:
         if isinstance(result, pd.DataFrame) and result.empty:
-            return sys.exit(0)
-    return sys.exit(1)
+            return sys.exit(1)
+    return sys.exit(0)
 
 
 def create_acl_from_yaml(filename, hostname, filter_name, platform):
