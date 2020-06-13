@@ -1,4 +1,10 @@
-from acl_auditor.helpers import create_acl_from_yaml, read_file, read_yaml
+from acl_auditor.helpers import (
+    create_acl_from_yaml,
+    read_file,
+    read_yaml,
+    write_file,
+)
+from unittest.mock import patch, mock_open
 
 EXPECTED_GENERATED_ACL_CISCO_NX = """hostname test-device
 ip access-list acl-example
@@ -47,3 +53,9 @@ def test_read_file():
 def test_read_yaml():
     yaml_file = read_yaml("tests/test_flows.yml")
     assert isinstance(yaml_file, (dict, list))
+
+def test_write_file(tmpdir):
+    file = tmpdir.join('output.txt')
+    write_file(file.strpath, "test_string") 
+    assert file.read() == 'test_string'
+
