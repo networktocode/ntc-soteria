@@ -1,114 +1,82 @@
 <html>
-  <head>
-    <link rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
-    <link rel="stylesheet"
-      href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
-      integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX"
-      crossorigin="anonymous"><script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
-      integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
-      crossorigin="anonymous"></script>
-    <script
-      src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
-      integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
-      crossorigin="anonymous"></script>
-
-    <style>
-    .table thead th {
+   <head>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <link rel="stylesheet"
+         href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons">
+      <link rel="stylesheet"
+         href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css"
+         integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX"
+         crossorigin="anonymous">
+      <script
+         src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+         crossorigin="anonymous"></script>
+      <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+         integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+         crossorigin="anonymous"></script>
+      <script
+         src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+         integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+         crossorigin="anonymous"></script>
+      <style>
+         .bg-primary {
+         background-color: #3f51b5 !important;
+         }
+         .table thead th {
          color: black;
-    } 
-        .bd-placeholder-img {
-          font-size: 1.125rem;
-          text-anchor: middle;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          user-select: none;
-        }
-  
-        @media (min-width: 768px) {
-          .bd-placeholder-img-lg {
-            font-size: 3.5rem;
-          }
-        }
-        html {
-      font-size: 14px;
-    }
-    @media (min-width: 768px) {
-      html {
-        font-size: 16px;
-      }
-    }
-
-    .container {
-      max-width: 95%;
-    }
-
-    .pricing-header {
-      max-width: 700px;
-    }
-
-    .card-deck .card {
-      min-width: 220px;
-    }
-
-    .nav {
-    background-color:#3f51b5!important;
-    color:white;
-    }
-    </style>
-  </head>
-
-  <body>
-
-    <div class="nav d-flex flex-column flex-md-row align-items-center p-3
-      px-md-4
-      mb-3 bg-white border-bottom shadow-sm">
-      <h3 class="my-0 mr-md-auto font-weight-normal">ACL Auditor</h3>
-
-    </div>
-
-    <div class="container">
-      <div class="card-deck mb-3">
-        <div class="card mb-4 shadow-sm">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Reference Rules</h4>
-          </div>
-          <div class="card-body">
-            <pre>{{ reference_flows }}</pre>
-
-          </div>
-        </div>
-
-
-
-      </div>
-
-      <div class="card-deck mb-3">
-        <div class="card mb-3 shadow-sm">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Reference Comparision Results</h4>
-          </div>
-          <div class="card-body">
-            {{ compare_results }}
-          </div>
-        </div>
-      </div>
-
-      <div class="card-deck mb-3">
-        <div class="card mb-3 shadow-sm">
-          <div class="card-header">
-            <h4 class="my-0 font-weight-normal">Unreachable Results</h4>
-          </div>
-          <div class="card-body">
-            {{ unreachable_results }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
+         } 
+         img.d-inline-block.align-top {
+         width: auto;
+         }
+         table {
+         font-size: 0.875rem;
+         }
+         .container {
+         max-width: 95%;
+         }
+         .card-deck .card {
+         min-width: 220px;
+         }
+         .navbar.bg-primary {
+         margin-bottom: 20px;
+         }
+      </style>
+   </head>
+   <body class="bg-light">
+      <nav class="navbar navbar-dark bg-primary">
+         <span class="navbar-brand mb-0 h2">ACL Auditor</span>
+      </nav>
+      <main role="main" class="container">
+         <div class="card-deck mb-3">
+            <div class="card mb-3 shadow-sm">
+               <div class="card-header">
+                  <h5 class="my-0 font-weight-normal">ACL Reference Comparision</h5>
+               </div>
+               <div class="alert alert-light" role="alert">
+                  <p>The results below highight any reference flows that the implementatied policy either incorrectly either permits or denies.</p>
+                  <hr>
+                  {{ compare_results }}
+                  <b>Note:</b><br> 
+                  <ul>
+                     <li>Implemented_Line_Action = DENY - <b>Reference</b> flows that are <b>incorrectly denied</b> by the <b>implemented</b> access list entry.</li>
+                     <li>Implemented_Line_Action = PERMIT - <b>Reference</b> flows that are <b>incorrectly permitted</b> by the <b>implemented</b> access list entry.  </li>
+                  </ul>
+               </div>
+            </div>
+         </div>
+         </div>
+         <div class="card-deck mb-3">
+            <div class="card mb-3 shadow-sm">
+               <div class="card-header">
+                  <h5 class="my-0 font-weight-normal">Unreachable ACL Entries</h5>
+               </div>
+               <div class="alert alert-light" role="alert">
+                  <p>The results below highlight any lines in the specified filters that will not match any packet, either because of being shadowed by prior lines or because of its match condition being empty.</p>
+                  <hr>
+                  {{ unreachable_results }}
+               </div>
+            </div>
+         </div>
+      </main>
+   </body>
 </html>

@@ -54,8 +54,8 @@ def test_read_yaml():
     yaml_file = read_yaml("tests/test_flows.yml")
     assert isinstance(yaml_file, (dict, list))
 
-def test_write_file(tmpdir):
-    file = tmpdir.join('output.txt')
-    write_file(file.strpath, "test_string") 
-    assert file.read() == 'test_string'
 
+def test_write_file(tmpdir):
+    file = tmpdir.join("output.txt")
+    write_file(file.strpath, "test_string")
+    assert file.read() == "test_string"
