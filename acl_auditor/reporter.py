@@ -3,7 +3,7 @@ from jinja2 import Template
 from helpers import read_file, write_file
 from tabulate import tabulate
 
-COMPARE_COLUMN_NAMES = [
+COMPARE_RESULTS_COLUMN_NAMES = [
     "Node",
     "Filter_Name",
     "Implemented_Line_Index",
@@ -14,22 +14,34 @@ COMPARE_COLUMN_NAMES = [
 ]
 
 
+def format_html_table(html):
+    formatted_html = re.sub(r"<(table|tr).*?>", r"<\g<1>>", html)
+    return re.sub(
+        r"<(table).*?>", r"<\g<1> class='table table-sm'>", formatted_html,
+    )
+
+
+def format_pd_frame(df):
+    warning_html = """<span class="material-icons" style="color:red;font-size: 20px;">\
+        error_outline\
+            </span>"""
+    df.insert(0, "", "")
+    df[""] = warning_html
+
+
 def generate_html_report(
     compare_results, unreachable_results, reference_flows
 ):
-    compare_results.frame().columns = COMPARE_COLUMN_NAMES
+    compare_results.frame().columns = COMPARE_RESULTS_COLUMN_NAMES
+    format_pd_frame(compare_results.frame())
+    format_pd_frame(unreachable_results.frame())
 
-    html_compare_results = compare_results.frame().to_html()
-    html_compare_results = re.sub(
-        r"<(table|tr).*?>", r"<\g<1>>", html_compare_results
+    html_compare_results = format_html_table(
+        compare_results.frame().to_html(index=False,escape=False)
     )
-    html_compare_results = re.sub(
-        r"<(table).*?>",
-        r"<\g<1> class='table table-sm'>",
-        html_compare_results,
+    html_unreachable_results = format_html_table(
+        unreachable_results.frame().to_html(index=False,escape=False)
     )
-
-    html_unreachable_results = unreachable_results.frame().to_html()
 
     rendered_report = render_report(
         "./acl_auditor/report.j2",
@@ -42,7 +54,7 @@ def generate_html_report(
 
 
 def display_compare_results(results):
-    results.frame().columns = COMPARE_COLUMN_NAMES
+    results.frame().columns = COMPARE_RESULTS_COLUMN_NAMES
     print(
         tabulate(
             results.frame(), headers="keys", tablefmt="psql", showindex=False

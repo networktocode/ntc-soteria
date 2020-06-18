@@ -90,7 +90,7 @@ if __name__ == "__main__":
         "--check",
         help="check",
         required=True,
-        choices=["compare", "unreachable"],
+        choices=["compare", "unreachable", "all"],
     )
     parser.add_argument(
         "-d", "--device_config", help="device_config", required=False
@@ -107,7 +107,11 @@ if __name__ == "__main__":
     filter_compare_results = str()
     unreachable_results = str()
 
-    if args["check"] == "compare":
+    if args["check"] in ["compare", "all"] and (
+        (not args["reference_flows"]) or (not args["acl_name"])
+    ):
+        parser.error("requires --reference_flows and --acl_name")
+    elif args["check"] == "compare":
         reference_flows = args["reference_flows"]
         acl_name = args["acl_name"]
 
@@ -116,16 +120,24 @@ if __name__ == "__main__":
         )
 
         display_compare_results(filter_compare_results)
-    elif args["check"] == "compare" and (
-        (args["reference_flows"] is None) or (args["acl_name"] is None)
-    ):
-        parser.error("compare requires --flows and --acl_name.")
     elif args["check"] == "unreachable":
         unreachable_results = acl_auditor.get_unreachable_lines()
         display_unreachable_results(unreachable_results)
+    elif args["check"] == "all":
+        reference_flows = args["reference_flows"]
+        acl_name = args["acl_name"]
 
-    if args["output"] == "html":
+        filter_compare_results = acl_auditor.get_acl_differences(
+            reference_flows, acl_name
+        )
 
+        unreachable_results = acl_auditor.get_unreachable_lines()
+        print("-- Reference Comparision --")
+        display_compare_results(filter_compare_results)
+        print("-- Unreachable ACL Entries --")
+        display_unreachable_results(unreachable_results)
+
+    if args["output"] == "html" and args["check"] == "all":
         generate_html_report(
             filter_compare_results,
             unreachable_results,
