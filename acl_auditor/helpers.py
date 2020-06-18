@@ -44,7 +44,8 @@ def generate_acl_syntax_cisco_nx(
     reference_flows=None, hostname=None, filter_name=None
 ):
     """
-    Turns the list of reference flows into an NXOS config file with the provided hostname and filter_name.
+    Turns the list of reference flows into an NXOS config file
+    with the provided hostname and filter_name.
     """
     acl_lines = [
         "hostname {}".format(hostname),
@@ -78,7 +79,8 @@ def generate_acl_syntax_juniper_srx(
     reference_flows=None, hostname=None, filter_name=None
 ):
     """
-    Turns the list of reference flows into an SRX config file with the provided hostname and filter_name.
+    Turns the list of reference flows into an SRX config file
+    with the provided hostname and filter_name.
     """
     acl_lines = [
         "set system host-name {}".format(hostname),
@@ -92,8 +94,8 @@ def generate_acl_syntax_juniper_srx(
         term_number += 1
 
     acl_lines.append(
-        "set firewall family inet filter {} term default-deny then discard".format(
-            filter_name, term_number
+        "set firewall family inet filter {} term default-deny then discard".format(  # noqa: E501
+            filter_name
         )
     )
     return "\n".join(acl_lines)
@@ -104,38 +106,35 @@ def _generate_acl_term_juniper_srx(reference_flow, filter_name, term_number):
     term_name = _get_term_name(reference_flow, term_number)
     if "source_ip" in reference_flow:
         term_lines.append(
-            "set firewall family inet filter {} term {} from source-address {}".format(
+            "set firewall family inet filter {} term {} from source-address {}".format(  # noqa: E501
                 filter_name, term_name, reference_flow["source_ip"]
             )
         )
     if "dest_ip" in reference_flow:
         term_lines.append(
-            "set firewall family inet filter {} term {} from destination-address {}".format(
+            "set firewall family inet filter {} term {} from destination-address {}".format(  # noqa: E501
                 filter_name, term_name, reference_flow["dest_ip"]
             )
         )
 
     if "proto" in reference_flow and reference_flow["proto"] != "ip":
         term_lines.append(
-            "set firewall family inet filter {} term {} from protocol {}".format(
+            "set firewall family inet filter {} term {} from protocol {}".format(  # noqa: E501
                 filter_name, term_name, reference_flow["proto"]
             )
         )
-
     if "source_port" in reference_flow:
         term_lines.append(
-            "set firewall family inet filter {} term {} from source-port {}".format(
+            "set firewall family inet filter {} term {} from source-port {}".format(  # noqa: E501
                 filter_name, term_name, reference_flow["source_port"]
             )
         )
-
     if "dest_port" in reference_flow:
         term_lines.append(
-            "set firewall family inet filter {} term {} from destination-port {}".format(
+            "set firewall family inet filter {} term {} from destination-port {}".format(  # noqa: E501
                 filter_name, term_name, reference_flow["dest_port"]
             )
         )
-
     action = (
         "accept"
         if "action" not in reference_flow
