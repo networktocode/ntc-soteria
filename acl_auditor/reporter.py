@@ -37,10 +37,10 @@ def generate_html_report(
     format_pd_frame(unreachable_results.frame())
 
     html_compare_results = format_html_table(
-        compare_results.frame().to_html(index=False,escape=False)
+        compare_results.frame().to_html(index=False, escape=False)
     )
     html_unreachable_results = format_html_table(
-        unreachable_results.frame().to_html(index=False,escape=False)
+        unreachable_results.frame().to_html(index=False, escape=False)
     )
 
     rendered_report = render_report(

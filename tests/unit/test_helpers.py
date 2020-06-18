@@ -4,7 +4,7 @@ from acl_auditor.helpers import (
     read_yaml,
     write_file,
 )
-from unittest.mock import patch, mock_open
+
 
 EXPECTED_GENERATED_ACL_CISCO_NX = """hostname test-device
 ip access-list acl-example
