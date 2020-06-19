@@ -1,7 +1,0 @@
-{
-    "python.pythonPath": "/home/rick/.cache/pypoetry/virtualenvs/batfish-flow-checker-p2reTBYp-py3.6/bin/python3",
-    "python.linting.pylintEnabled": false,
-    "python.linting.enabled": true,
-    "python.formatting.provider": "black",
-    "python.linting.flake8Enabled": true
-}
