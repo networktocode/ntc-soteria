@@ -5,13 +5,13 @@ This repo contains an ACL auditing tool based on Batfish. The goal of this tool 
 This tool provides the ability to perform 2 types of audits against a ACL rule base.
 
 * **ACL Reference Comparision** - This audit takes 3 pieces of information, a single YAML file containing a set of reference flows, the configuration of your firewall and also the ACL name in question. It then calculates the difference between your reference flows and implemented flows, to provide you with the differences. Some uses cases for this include:
- * Prevent human error, during firewall changes. For example incorrect addition of ip any any.
- * Allows you to run routine scripted checks against your ACL base to ensure no ACLs are opened by bad actors.
- * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
+  * Prevent human error, during firewall changes. For example incorrect addition of ip any any.
+  * Allows you to run routine scripted checks against your ACL base to ensure no ACLs are opened by bad actors.
+  * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
 * **Unreachable ACL Entries** - This check takes a firewall configuration containing your ACL rule sets. It then reports on any lines in the specified filters that will not match any packet, either because of being shadowed by prior lines or because of its match condition being empty. The key usecases for this are:
- * Prevent human error, during firewall changes. For example incorrect placement of a encompassing deny rule.
- * Assist in keeping your ACL rule sets minimal and free of unnesary lines.
- * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
+  * Prevent human error, during firewall changes. For example incorrect placement of a encompassing deny rule.
+  * Assist in keeping your ACL rule sets minimal and free of unnesary lines.
+  * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
 
 ## Prerequisites
 This tool requires that you have a Batfish service running. This is installed on a Docker like so:
@@ -46,5 +46,5 @@ An HTML report can be generated with the results. However, this option can only 
 ```
 ./acl_auditor/auditor.py -c all -d data/asa.cfg -r data/flows.yml -a acl-inside -o html
 ```
-Once complete a HTML report will also be saved within `./data`.
-Note: The HTML report generated uses the following Material/Bootstrap framework: https://fezvrasta.github.io/bootstrap-material-design/.
+Once complete a HTML report will also be saved within `./data`.<br>
+**Note:** The HTML report generated uses the following Material/Bootstrap framework: https://fezvrasta.github.io/bootstrap-material-design/.
