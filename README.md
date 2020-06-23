@@ -1,16 +1,16 @@
 # Batfish ACL Auditor
-This repo contains an ACL auditing tool based on Batfish. The goal of this tool is help you automate the process of validating your firewall ACLs, and access. Along with providing a foundation from which you can learn more about performing network automation with Batfish.
+This repo contains an ACL auditing tool based on Batfish. The goal of this tool is to help you automate the process of validating your firewall ACLs, and access. Along with providing a foundation from which you can learn more about performing network automation with Batfish.
 
 ## Audits
-This tool provides the ability to perform 2 types of audits against a ACL rule base.
+This tool provides the ability to perform 2 types of audits against an ACL rule base.
 
-* **ACL Reference Comparision** - This audit takes 3 pieces of information, a single YAML file containing a set of reference flows, the configuration of your firewall and also the ACL name in question. It then calculates the difference between your reference flows and implemented flows, to provide you with the differences. Some uses cases for this include:
+* **ACL Reference Comparision** - This audit takes 3 pieces of information, a single YAML file containing a set of reference flows, the configuration of your firewall, and also the ACL name in question. It then calculates the difference between your reference flows and implemented flows, to provide you with the differences. Some use cases for this include:
   * Prevent human error, during firewall changes. For example incorrect addition of ip any any.
   * Allows you to run routine scripted checks against your ACL base to ensure no ACLs are opened by bad actors.
   * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
-* **Unreachable ACL Entries** - This check takes a firewall configuration containing your ACL rule sets. It then reports on any lines in the specified filters that will not match any packet, either because of being shadowed by prior lines or because of its match condition being empty. The key usecases for this are:
-  * Prevent human error, during firewall changes. For example incorrect placement of a encompassing deny rule.
-  * Assist in keeping your ACL rule sets minimal and free of unnesary lines.
+* **Unreachable ACL Entries** - This check takes a firewall configuration containing your ACL rule sets. It then reports on any lines in the specified filters that will not match any packet, either because of being shadowed by prior lines or because of its match condition being empty. The key use cases for this are:
+  * Prevent human error, during firewall changes. For example, incorrect placement of an encompassing deny rule.
+  * Assist in keeping your ACL rule sets minimal and free of unnecessary lines.
   * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
 
 ## Prerequisites
@@ -30,7 +30,7 @@ poetry shell
 ```
 
 ## Usage
-Below shows the various options for this this tool. Note: Sample files are provided within the `./data` directory for inital testing.
+Below shows the various options for this tool. Note: Sample files are provided within the `./data` directory for initial testing.
 Before running any of the commands you will need to set an environment variable for your Batfish host, like so: `export BATFISH_SERVICE_HOST=localhost`.
 
 ### ACL Reference Comparision
