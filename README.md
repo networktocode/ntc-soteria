@@ -46,5 +46,5 @@ An HTML report can be generated with the results. However, this option can only 
 ```
 ./acl_auditor/auditor.py -c all -d data/asa.cfg -r data/flows.yml -a acl-inside -o html
 ```
-Once complete a HTML report will also be saved within `./data`.<br>
+Once complete a HTML report will be saved within `./data`.<br>
 **Note:** The HTML report generated uses the following Material/Bootstrap framework: https://fezvrasta.github.io/bootstrap-material-design/.
