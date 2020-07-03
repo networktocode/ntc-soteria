@@ -20,11 +20,19 @@ docker pull batfish/allinone
 docker run --name batfish -d -v batfish-data:/data -p 8888:8888 -p 9997:9997 -p 9996:9996 batfish/allinone
 ```
 
+You must also have `poetry` installed.  This can be installed like so:
+
+```
+curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python3
+source $HOME/.poetry/env
+```
+You also need Python 3.
+
 ## Installation
 To install this tool run the following commands:
 ```
 git clone git@github.com:networktocode/batfish-acl-auditor.git
-poetry add env python3.6
+cd batfish-acl-auditor
 poetry install
 poetry shell
 ```
