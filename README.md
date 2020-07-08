@@ -13,6 +13,10 @@ This tool provides the ability to perform 2 types of audits against an ACL rule 
   * Assist in keeping your ACL rule sets minimal and free of unnecessary lines.
   * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
 
+## Supported Devices
+The following platforms are supported and have been tested:
+* Cisco ASA
+
 ## Prerequisites
 This tool requires that you have a Batfish service running. This is installed on a Docker like so:
 ```
@@ -31,14 +35,36 @@ poetry shell
 ```
 
 ## Usage
-Below shows the various options for this tool. Note: Sample files are provided within the `./data` directory for initial testing.
+Below shows the various options for this tool. 
+**Note:** Sample files are provided within the `./data` directory for initial testing. However, you can specify alternative paths for your input files should then reside elsewhere.
 Before running any of the commands you will need to set an environment variable for your Batfish host, like so: `export BATFISH_SERVICE_HOST=localhost`.
 
 ### ACL Reference Comparision
+The reference comparision option takes the following inputs:
+* device configuration (`-d`)
+* acl name to validate from within your device configuration (`-a`)
+* reference flows (`-r`)
+The reference flow file strucutre is shown below:
+```
+---
+- source_ip: <network>/<cidr>
+  dest_ip: <network>/<cidr>
+  proto: <protocol>
+  action: <permit/deny>
+  name: <description of flow>
+```
+**Example:**
+
 ```
 ./acl_auditor/auditor.py -c compare -d data/asa.cfg -r data/flows.yml -a acl-inside 
 ```
+
+
+
 ### Unreachable ACL Entries
+The unreachable acl entry option takes the following inputs:
+* device configuration (`-d`)
+**Example:**
 ```
 ./acl_auditor/auditor.py -c unreachable -d data/asa.cfg
 ```
