@@ -28,7 +28,9 @@ docker run --name batfish -d -v batfish-data:/data -p 8888:8888 -p 9997:9997 -p 
 To install this tool run the following commands:
 ```
 git clone git@github.com:networktocode/batfish-acl-auditor.git
+
 cd batfish-acl-auditor
+
 poetry add env python3.6
 poetry install
 poetry shell
@@ -36,7 +38,9 @@ poetry shell
 
 ## Usage
 Below shows the various options for this tool. 
+
 **Note:** Sample files are provided within the `./data` directory for initial testing. However, you can specify alternative paths for your input files should then reside elsewhere.
+
 Before running any of the commands you will need to set an environment variable for your Batfish host, like so: `export BATFISH_SERVICE_HOST=localhost`.
 
 ### ACL Reference Comparision
@@ -44,6 +48,7 @@ The reference comparision option takes the following inputs:
 * device configuration (`-d`)
 * acl name to validate from within your device configuration (`-a`)
 * reference flows (`-r`)
+
 The reference flow file strucutre is shown below:
 ```
 ---
@@ -64,6 +69,7 @@ The reference flow file strucutre is shown below:
 ### Unreachable ACL Entries
 The unreachable acl entry option takes the following inputs:
 * device configuration (`-d`)
+
 **Example:**
 ```
 ./acl_auditor/auditor.py -c unreachable -d data/asa.cfg
