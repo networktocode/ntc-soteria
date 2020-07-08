@@ -24,6 +24,7 @@ docker run --name batfish -d -v batfish-data:/data -p 8888:8888 -p 9997:9997 -p 
 To install this tool run the following commands:
 ```
 git clone git@github.com:networktocode/batfish-acl-auditor.git
+cd batfish-acl-auditor
 poetry add env python3.6
 poetry install
 poetry shell
@@ -47,5 +48,5 @@ An HTML report can be generated with the results. However, this option can only 
 ./acl_auditor/auditor.py -c all -d data/asa.cfg -r data/flows.yml -a acl-inside -o html
 ```
 Once complete a HTML report will be saved within `./data`. Below shows an example:
-![alt text](https://github.com/networktocode/batfish-acl-auditor/blob/rdo-add-report-image/data/report-example.png?raw=true)
+![alt text](https://github.com/networktocode/batfish-acl-auditor/blob/master/data/report-example.png?raw=true)
 **Note:** The HTML report generated uses the following Material/Bootstrap framework: https://fezvrasta.github.io/bootstrap-material-design/.
