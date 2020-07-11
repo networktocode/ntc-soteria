@@ -71,7 +71,7 @@ def generate_acl_syntax_cisco_nx(
             )
         )
         seq_number += 10
-    acl_lines.append("  {} deny ip any any".format(seq_number))
+    # acl_lines.append("  {} deny ip any any".format(seq_number))
     return "\n".join(acl_lines)
 
 
@@ -93,11 +93,11 @@ def generate_acl_syntax_juniper_srx(
         )
         term_number += 1
 
-    acl_lines.append(
-        "set firewall family inet filter {} term default-deny then discard".format(  # noqa: E501
-            filter_name
-        )
-    )
+    # acl_lines.append(
+    #    "set firewall family inet filter {} term default-deny then discard".format(  # noqa: E501
+    #        filter_name
+    #    )
+    # )
     return "\n".join(acl_lines)
 
 

@@ -53,13 +53,17 @@
                   <h5 class="my-0 font-weight-normal">ACL Reference Comparision</h5>
                </div>
                <div class="alert alert-light" role="alert">
-                  <p>The results below highight any reference flows that the implemented policy either incorrectly either permits or denies.</p>
+                  <p>The results below highlight any flows that have been implemented or not implemented based on a reference flow definition.</p>
+                  This allows you to see:
+                  <ul>
+                     <li>Flows that your firewall is permitting or denying ; Incorrect behaviour as these flows are NOT in your reference flow definition.</li>
+                     <li>Flows that your firewall is NOT permitting or denying ; Incorrect behaviour as these flows SHOULD BE implemented due to being within your flow definition.</li>
+                  </ul>
                   <hr>
                   {{ compare_results }}
-                  <b>Note:</b><br> 
+                  <b>Note:</b><br>   
                   <ul>
-                     <li>Implemented_Line_Action = DENY - <b>Reference</b> flows that are <b>incorrectly denied</b> by the <b>implemented</b> access list entry.</li>
-                     <li>Implemented_Line_Action = PERMIT - <b>Reference</b> flows that are <b>incorrectly permitted</b> by the <b>implemented</b> access list entry.  </li>
+                     <li>No Match - Refers to a flow (implemented or reference) that has no matching flow to determine outcome.</il>
                   </ul>
                </div>
             </div>

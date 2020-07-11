@@ -10,8 +10,7 @@ EXPECTED_GENERATED_ACL_CISCO_NX = """hostname test-device
 ip access-list acl-example
   10 deny ip 10.0.0.0/8 8.8.8.8/32 
   20 permit ip 11.36.216.176/32 11.36.216.0/24 
-  30 permit tcp 10.36.176.0/24 11.20.0.0/16 range 1000 20000
-  40 deny ip any any"""  # noqa
+  30 permit tcp 10.36.176.0/24 11.20.0.0/16 range 1000 20000"""  # noqa
 
 
 EXPECTED_GENERATED_ACL_JUNIPER_SRX = """set system host-name test-device
@@ -25,8 +24,7 @@ set firewall family inet filter acl-example term "flow3 (10.36.176.0/24 any 11.2
 set firewall family inet filter acl-example term "flow3 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)" from destination-address 11.20.0.0/16
 set firewall family inet filter acl-example term "flow3 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)" from protocol tcp
 set firewall family inet filter acl-example term "flow3 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)" from destination-port 1000-20000
-set firewall family inet filter acl-example term "flow3 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)" then accept
-set firewall family inet filter acl-example term default-deny then discard"""  # noqa
+set firewall family inet filter acl-example term "flow3 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)" then accept"""  # noqa
 
 
 def test_create_acl_cisco_nx():
