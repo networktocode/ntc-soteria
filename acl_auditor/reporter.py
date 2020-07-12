@@ -23,15 +23,16 @@ COMPARE_RESULTS_COLUMN_ORDER = [
     "Implemented Filter Name",
 ]
 
-COMPARE_RESULTS_COLUMN_NAMES = [
+DIFF_RESULTS_COLUMN_NAMES = [
     "Sources",
     "Unreachable Line",
     "Unreachable Line Action",
     "Blocking Lines",
     "Different Action",
     "Reason",
-    "Additional Info"
+    "Additional Info",
 ]
+
 
 def format_html_table(html):
     formatted_html = re.sub(r"<(table|tr).*?>", r"<\g<1>>", html)
@@ -48,15 +49,18 @@ def add_html_errors_pd_frame(df):
     df[""] = warning_html
 
 
-def format_df(df, column_names, column_order, sort_by_column):
+def format_df(df, column_names, column_order=None, sort_by_column=None):
     # replace string value
     df = df.replace(["End of ACL"], "No Match")
     # rename columns
     df.columns = column_names
     # reorder columns
-    df = df[column_order]
+    if column_order:
+        df = df[column_order]
     # sort by column
-    return df.sort_values(sort_by_column)
+    if sort_by_column:
+        df = df.sort_values(sort_by_column)
+    return df
 
 
 def render_report(
@@ -73,6 +77,7 @@ def render_report(
         reference_flows=reference_flows,
     )
 
+
 def generate_html_report(
     compare_results, unreachable_results, reference_flows
 ):
@@ -83,14 +88,17 @@ def generate_html_report(
         COMPARE_RESULTS_COLUMN_ORDER,
         "Reference Flow Index",
     )
+    unreachable_results = format_df(
+        unreachable_results.frame(), DIFF_RESULTS_COLUMN_NAMES
+    )
     add_html_errors_pd_frame(compare_results)
-    add_html_errors_pd_frame(unreachable_results.frame())
+    add_html_errors_pd_frame(unreachable_results)
 
     html_compare_results = format_html_table(
         compare_results.to_html(index=False, escape=False)
     )
     html_unreachable_results = format_html_table(
-        unreachable_results.frame().to_html(index=False, escape=False)
+        unreachable_results.to_html(index=False, escape=False)
     )
 
     rendered_report = render_report(
@@ -114,11 +122,5 @@ def display_compare_results(results):
 
 
 def display_unreachable_results(results):
-    print(
-        tabulate(
-            results.frame(), headers="keys", tablefmt="psql", showindex=False
-        )
-    )
-
-
-
+    results = format_df(results.frame(), DIFF_RESULTS_COLUMN_NAMES)
+    print(tabulate(results, headers="keys", tablefmt="psql", showindex=False))

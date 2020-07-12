@@ -53,17 +53,16 @@
                   <h5 class="my-0 font-weight-normal">ACL Reference Comparision</h5>
                </div>
                <div class="alert alert-light" role="alert">
-                  <p>The results below highlight any flows that have been implemented or not implemented based on a reference flow definition.</p>
-                  This allows you to see:
+                  <p>The results below highlight any flows that have been incorrectly implemented or not implemented according your reference flows.</br>This includes:</p>
                   <ul>
-                     <li>Flows that your firewall is permitting or denying ; Incorrect behaviour as these flows are NOT in your reference flow definition.</li>
-                     <li>Flows that your firewall is NOT permitting or denying ; Incorrect behaviour as these flows SHOULD BE implemented due to being within your flow definition.</li>
+                     <li>flows that your <b>firewall IS permitting or denying</b> ; Audit failure as these <b>flows are NOT in your reference</b> flow definition.</li>
+                     <li>flows that your <b>firewall IS NOT permitting or denying</b>; Audit failure as these <b>flows SHOULD BE implemented</b> due to being within your flow definition.</li>
                   </ul>
                   <hr>
                   {{ compare_results }}
                   <b>Note:</b><br>   
                   <ul>
-                     <li>No Match - Refers to a flow (implemented or reference) that has no matching flow to determine outcome.</il>
+                     <li><b>No Match</b> - Refers to a flow (implemented or reference) that has no matching flow to determine outcome.</il>
                   </ul>
                </div>
             </div>
