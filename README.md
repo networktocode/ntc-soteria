@@ -16,6 +16,7 @@ This tool provides the ability to perform 2 types of audits against an ACL rule 
 ## Supported Devices
 The following platforms are supported and have been tested:
 * Cisco ASA
+* IOS-XE
 
 ## Prerequisites
 This tool requires that you have a Batfish service running. This is installed on a Docker like so:
