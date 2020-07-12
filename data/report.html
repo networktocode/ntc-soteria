@@ -53,48 +53,61 @@
                   <h5 class="my-0 font-weight-normal">ACL Reference Comparision</h5>
                </div>
                <div class="alert alert-light" role="alert">
-                  <p>The results below highight any reference flows that the implemented policy either incorrectly either permits or denies.</p>
+                  <p>The results below highlight any flows that have been incorrectly implemented or not implemented according your reference flows.</br>This includes:</p>
+                  <ul>
+                     <li>flows that your <b>firewall IS permitting or denying</b> ; Audit failure as these <b>flows are NOT in your reference</b> flow definition.</li>
+                     <li>flows that your <b>firewall IS NOT permitting or denying</b>; Audit failure as these <b>flows SHOULD BE implemented</b> due to being within your flow definition.</li>
+                  </ul>
                   <hr>
                   <table class='table table-sm'>
   <thead>
     <tr>
       <th></th>
-      <th>Node</th>
-      <th>Filter_Name</th>
-      <th>Implemented_Line_Index</th>
-      <th>Implemented_Line_Content</th>
-      <th>Implemented_Line_Action</th>
-      <th>Reference_Line_Index</th>
-      <th>Reference_Line_Content</th>
+      <th>Reference Flow Index</th>
+      <th>Reference Flow Content</th>
+      <th>Implemented Flow Action</th>
+      <th>Implemented Flow Index</th>
+      <th>Implemented Flow Content</th>
+      <th>Implemented Node</th>
+      <th>Implemented Filter Name</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <td><span class="material-icons" style="color:red;font-size: 20px;">        error_outline            </span></td>
-      <td>fw1</td>
-      <td>acl-inside</td>
+      <td>0</td>
+      <td>"from-11-36-216-176 (11.36.216.176/32 any 11.36.216.0/24 any ip permit)"</td>
+      <td>DENY</td>
       <td>0</td>
       <td>deny ip any4 any4</td>
-      <td>DENY</td>
-      <td>1</td>
-      <td>"from-11-36-216-176 (11.36.216.176/32 any 11.36.216.0/24 any ip permit)"</td>
+      <td>fw1</td>
+      <td>acl-inside</td>
     </tr>
     <tr>
       <td><span class="material-icons" style="color:red;font-size: 20px;">        error_outline            </span></td>
-      <td>fw1</td>
-      <td>acl-inside</td>
+      <td>1</td>
+      <td>"flow2 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)"</td>
+      <td>DENY</td>
       <td>0</td>
       <td>deny ip any4 any4</td>
-      <td>DENY</td>
+      <td>fw1</td>
+      <td>acl-inside</td>
+    </tr>
+    <tr>
+      <td><span class="material-icons" style="color:red;font-size: 20px;">        error_outline            </span></td>
       <td>2</td>
-      <td>"flow3 (10.36.176.0/24 any 11.20.0.0/16 1000-20000 tcp permit)"</td>
+      <td>"flow3 (0.0.0.0/0 any 0.0.0.0/0 any ip permit)"</td>
+      <td>DENY</td>
+      <td>0</td>
+      <td>deny ip any4 any4</td>
+      <td>fw1</td>
+      <td>acl-inside</td>
     </tr>
   </tbody>
 </table>
-                  <b>Note:</b><br> 
+                  <b>Note:</b><br>   
                   <ul>
-                     <li>Implemented_Line_Action = DENY - <b>Reference</b> flows that are <b>incorrectly denied</b> by the <b>implemented</b> access list entry.</li>
-                     <li>Implemented_Line_Action = PERMIT - <b>Reference</b> flows that are <b>incorrectly permitted</b> by the <b>implemented</b> access list entry.  </li>
+                     <li><b>No Match</b> - Refers to a flow (implemented or reference) that has no matching flow to determine outcome.</il>
                   </ul>
                </div>
             </div>
@@ -113,12 +126,12 @@
     <tr>
       <th></th>
       <th>Sources</th>
-      <th>Unreachable_Line</th>
-      <th>Unreachable_Line_Action</th>
-      <th>Blocking_Lines</th>
-      <th>Different_Action</th>
+      <th>Unreachable Line</th>
+      <th>Unreachable Line Action</th>
+      <th>Blocking Lines</th>
+      <th>Different Action</th>
       <th>Reason</th>
-      <th>Additional_Info</th>
+      <th>Additional Info</th>
     </tr>
   </thead>
   <tbody>

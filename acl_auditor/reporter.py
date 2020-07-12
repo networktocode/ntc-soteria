@@ -4,13 +4,33 @@ from helpers import read_file, write_file
 from tabulate import tabulate
 
 COMPARE_RESULTS_COLUMN_NAMES = [
-    "Node",
-    "Filter_Name",
-    "Implemented_Line_Index",
-    "Implemented_Line_Content",
-    "Implemented_Line_Action",
-    "Reference_Line_Index",
-    "Reference_Line_Content",
+    "Implemented Node",
+    "Implemented Filter Name",
+    "Implemented Flow Index",
+    "Implemented Flow Content",
+    "Implemented Flow Action",
+    "Reference Flow Index",
+    "Reference Flow Content",
+]
+
+COMPARE_RESULTS_COLUMN_ORDER = [
+    "Reference Flow Index",
+    "Reference Flow Content",
+    "Implemented Flow Action",
+    "Implemented Flow Index",
+    "Implemented Flow Content",
+    "Implemented Node",
+    "Implemented Filter Name",
+]
+
+DIFF_RESULTS_COLUMN_NAMES = [
+    "Sources",
+    "Unreachable Line",
+    "Unreachable Line Action",
+    "Blocking Lines",
+    "Different Action",
+    "Reason",
+    "Additional Info",
 ]
 
 
@@ -21,7 +41,7 @@ def format_html_table(html):
     )
 
 
-def format_pd_frame(df):
+def add_html_errors_pd_frame(df):
     warning_html = """<span class="material-icons" style="color:red;font-size: 20px;">\
         error_outline\
             </span>"""
@@ -29,45 +49,18 @@ def format_pd_frame(df):
     df[""] = warning_html
 
 
-def generate_html_report(
-    compare_results, unreachable_results, reference_flows
-):
-    compare_results.frame().columns = COMPARE_RESULTS_COLUMN_NAMES
-    format_pd_frame(compare_results.frame())
-    format_pd_frame(unreachable_results.frame())
-
-    html_compare_results = format_html_table(
-        compare_results.frame().to_html(index=False, escape=False)
-    )
-    html_unreachable_results = format_html_table(
-        unreachable_results.frame().to_html(index=False, escape=False)
-    )
-
-    rendered_report = render_report(
-        "./acl_auditor/report.j2",
-        html_compare_results,
-        html_unreachable_results,
-        reference_flows,
-    )
-
-    write_file("data/report.html", rendered_report)
-
-
-def display_compare_results(results):
-    results.frame().columns = COMPARE_RESULTS_COLUMN_NAMES
-    print(
-        tabulate(
-            results.frame(), headers="keys", tablefmt="psql", showindex=False
-        )
-    )
-
-
-def display_unreachable_results(results):
-    print(
-        tabulate(
-            results.frame(), headers="keys", tablefmt="psql", showindex=False
-        )
-    )
+def format_df(df, column_names, column_order=None, sort_by_column=None):
+    # replace string value
+    df = df.replace(["End of ACL"], "No Match")
+    # rename columns
+    df.columns = column_names
+    # reorder columns
+    if column_order:
+        df = df[column_order]
+    # sort by column
+    if sort_by_column:
+        df = df.sort_values(sort_by_column)
+    return df
 
 
 def render_report(
@@ -83,3 +76,51 @@ def render_report(
         compare_results=html_compare_results,
         reference_flows=reference_flows,
     )
+
+
+def generate_html_report(
+    compare_results, unreachable_results, reference_flows
+):
+    # compare_results.frame().columns = COMPARE_RESULTS_COLUMN_NAMES
+    compare_results = format_df(
+        compare_results.frame(),
+        COMPARE_RESULTS_COLUMN_NAMES,
+        COMPARE_RESULTS_COLUMN_ORDER,
+        "Reference Flow Index",
+    )
+    unreachable_results = format_df(
+        unreachable_results.frame(), DIFF_RESULTS_COLUMN_NAMES
+    )
+    add_html_errors_pd_frame(compare_results)
+    add_html_errors_pd_frame(unreachable_results)
+
+    html_compare_results = format_html_table(
+        compare_results.to_html(index=False, escape=False)
+    )
+    html_unreachable_results = format_html_table(
+        unreachable_results.to_html(index=False, escape=False)
+    )
+
+    rendered_report = render_report(
+        "./acl_auditor/report.j2",
+        html_compare_results,
+        html_unreachable_results,
+        reference_flows,
+    )
+
+    write_file("data/report.html", rendered_report)
+
+
+def display_compare_results(results):
+    results = format_df(
+        results.frame(),
+        COMPARE_RESULTS_COLUMN_NAMES,
+        COMPARE_RESULTS_COLUMN_ORDER,
+        "Reference Flow Index",
+    )
+    print(tabulate(results, headers="keys", tablefmt="psql", showindex=False))
+
+
+def display_unreachable_results(results):
+    results = format_df(results.frame(), DIFF_RESULTS_COLUMN_NAMES)
+    print(tabulate(results, headers="keys", tablefmt="psql", showindex=False))

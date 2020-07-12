@@ -1,9 +1,4 @@
 ---
-- source_ip: 10.0.0.0/8
-  dest_ip: 8.8.8.8/32
-  proto: ip
-  action: deny
-  name: to-google-dns
 - source_ip: 11.36.216.176/32
   dest_ip: 11.36.216.0/24
   proto: ip
@@ -13,4 +8,8 @@
   dest_ip: 11.20.0.0/16
   dest_port: 1000-20000
   proto: tcp
+  action: permit
+- source_ip: 0.0.0.0/0
+  dest_ip: 0.0.0.0/0
+  proto: ip
   action: permit
