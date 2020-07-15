@@ -35,7 +35,7 @@ docker-compose exec acl_auditor <command>
 **Note:**
 
 * As part of `docker-compose` the `./data` folder is created as a volume. This allows you to easily add configs or pull reports.
-* You will only need to run `docker-compose build` once. Once the containers are builtd you can just bring your Docker Compose stack up via `docker-compose up -d`
+* You will only need to run `docker-compose build` once. Once the containers are built you can just bring your Docker Compose stack up via `docker-compose up -d`
 
 ## Usage
 Below shows the various options for this tool. 
