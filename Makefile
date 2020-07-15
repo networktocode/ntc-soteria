@@ -1,10 +1,16 @@
 .DEFAULT_GOAL := help
 
+DOCKER_IMAGE = networktocode/acl-auditor
+DOCKER_VER = 0.0.1
+
 .PHONY: help
 help:
 	@grep '^[a-zA-Z]' $(MAKEFILE_LIST) | \
 	sort | \
 	awk -F ':.*?## ' 'NF==2 {printf "\033[36m  %-25s\033[0m %s\n", $$1, $$2}'
+
+build: ## Build Docker container.
+	docker build -t $(DOCKER_IMAGE):$(DOCKER_VER) .
 
 pylint: ## Python linting via Pylint.
 	find . -name venv -prune -o -name '*.py' -exec pylint {} +

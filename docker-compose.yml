@@ -1,0 +1,19 @@
+version: '3.5'
+services:
+  acl_auditor:
+    container_name: acl_auditor
+    build:
+      context: .
+      dockerfile: Dockerfile
+    stdin_open: true
+    tty: true
+    depends_on:
+      - "batfish"
+    volumes:
+      - ./data:/source/data
+  batfish:
+      container_name: batfish
+      image: batfish/batfish:latest
+      ports:
+        - 9997:9997
+        - 9996:9996
