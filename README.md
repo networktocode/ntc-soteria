@@ -18,31 +18,29 @@ The following platforms are supported and have been tested:
 * Cisco ASA
 * IOS-XE
 
-## Prerequisites
-This tool requires that you have a Batfish service running. This is installed on a Docker like so:
-```
-docker pull batfish/allinone
-docker run --name batfish -d -v batfish-data:/data -p 8888:8888 -p 9997:9997 -p 9996:9996 batfish/allinone
-```
+## Docker Compose
+To create the required environment in order to run this tool, along with deploy the Batfish service dependancy, a docker-compose file is provided.
 
-## Installation
-To install this tool run the following commands:
+Before running install Docker and Docker Compose. Once installed run the following commands:
 ```
 git clone git@github.com:networktocode/batfish-acl-auditor.git
 
 cd batfish-acl-auditor
 
-poetry add env python3.6
-poetry install
-poetry shell
+docker-compose build
+docker-compose up -d
+docker-compose exec acl_auditor <command>
 ```
+
+**Note:**
+
+* As part of `docker-compose` the `./data` folder is created as a volume. This allows you to easily add configs or pull reports.
+* You will only need to run `docker-compose build` once. Once the containers are build you can just bring your Docker Compose stack up via `docker-compose up -d`
 
 ## Usage
 Below shows the various options for this tool. 
 
-**Note:** Sample files are provided within the `./data` directory for initial testing. However, you can specify alternative paths for your input files should then reside elsewhere.
-
-Before running any of the commands you will need to set an environment variable for your Batfish host, like so: `export BATFISH_SERVICE_HOST=localhost`.
+**Note:** Sample files are provided within the `./data` directory for initial testing. 
 
 ### ACL Reference Comparision
 The reference comparision option takes the following inputs:
