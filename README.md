@@ -1,5 +1,5 @@
-# Batfish ACL Auditor
-This repo contains an ACL auditing tool based on Batfish. The goal of this tool is to help you automate the process of validating your firewall ACLs, and access. Along with providing a foundation from which you can learn more about performing network automation with Batfish.
+# ntc-soteria
+ntc-soteria is an ACL auditing tool based on Batfish. The goal of this tool is to help you automate the process of validating your firewall ACLs, and access.
 
 ## Audits
 This tool provides the ability to perform 2 types of audits against an ACL rule base.
@@ -23,9 +23,9 @@ To create the required environment in order to run this tool, along with deploy 
 
 Before running install Docker and Docker Compose. Once installed run the following commands:
 ```
-git clone git@github.com:networktocode/batfish-acl-auditor.git
+git clone git@github.com:networktocode/ntc-soteria.git
 
-cd batfish-acl-auditor
+cd ntc-soteria
 
 docker-compose build
 docker-compose up -d
