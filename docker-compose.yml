@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-  acl_auditor:
+  ntc-soteria:
     container_name: acl_auditor
     build:
       context: .
