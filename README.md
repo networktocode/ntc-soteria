@@ -1,10 +1,10 @@
 # ntc-soteria
-ntc-soteria is an ACL auditing tool based on Batfish. The goal of this tool is to help you automate the process of validating your firewall ACLs, and access.
+ntc-soteria is an ACL auditing tool based on Batfish. The goal of this tool is to help you automate the process of validating and maintaining your firewall ACLs.
 
 ## Audits
 This tool provides the ability to perform 2 types of audits against an ACL rule base.
 
-* **ACL Reference Comparision** - This audit takes 3 pieces of information, a single YAML file containing a set of reference flows, the configuration of your firewall, and also the ACL name in question. It then calculates the difference between your reference flows and implemented flows, to provide you with the differences. Some use cases for this include:
+* **ACL Differential** - This audit takes 3 pieces of information, a single YAML file containing a set of reference flows, the configuration of your firewall, and also the ACL name in question. It then calculates the difference between your reference flows and implemented flows, to provide you with the differences. Some use cases for this include:
   * Prevent human error, during firewall changes. For example incorrect addition of ip any any.
   * Allows you to run routine scripted checks against your ACL base to ensure no ACLs are opened by bad actors.
   * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
@@ -14,7 +14,7 @@ This tool provides the ability to perform 2 types of audits against an ACL rule 
   * As this can function as a CLI script you can add this to part of your ACL CI pipelines.
 
 ## Supported Devices
-The following platforms are supported and have been tested:
+The following platforms have been tested:
 * Cisco ASA
 * IOS-XE
 
