@@ -5,7 +5,6 @@ import logging
 import os
 import sys
 
-from dotenv import load_dotenv
 from pybatfish.client.commands import bf_session
 from pybatfish.question import bfq
 from pybatfish.question.question import load_questions
@@ -16,19 +15,15 @@ from reporter import (
     generate_html_report,
 )
 
-load_dotenv()
 
 logging.getLogger("pybatfish").setLevel(logging.CRITICAL)
 
 
 class ACLAuditor:
-    def __init__(self, config_file, batfish_host):
-        self.init_session(batfish_host)
-        self.config_file = config_file
-
-    def init_session(self, batfish_host):
-        bf_session.host = batfish_host
+    def __init__(self, config_file):
+        bf_session.host = "127.0.0.1"
         load_questions()
+        self.config_file = config_file
 
     def _create_base_snapshot(self):
         bf_session.init_snapshot_from_text(
@@ -84,8 +79,6 @@ class ACLAuditor:
 
 
 if __name__ == "__main__":
-    batfish_host = os.getenv("BATFISH_SERVICE_HOST")
-
     parser = argparse.ArgumentParser(description="Batfish ACL Auditor")
     parser.add_argument(
         "-c",
@@ -105,7 +98,7 @@ if __name__ == "__main__":
     args = vars(parser.parse_args())
 
     config = read_file(args["device_config"])
-    acl_auditor = ACLAuditor(config, batfish_host)
+    acl_auditor = ACLAuditor(config)
     filter_compare_results = str()
     unreachable_results = str()
 

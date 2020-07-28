@@ -1,15 +1,11 @@
 ---
-- source_ip: 11.36.216.176/32
-  dest_ip: 11.36.216.0/24
-  proto: ip
+- source_ip: 10.0.1.1/32
+  dest_ip: 8.8.8.8/32
+  dest_port: 53
+  proto: udp
   action: permit
-  name: from-11-36-216-176
-- source_ip: 10.36.176.0/24
-  dest_ip: 11.20.0.0/16
-  dest_port: 1000-20000
+- source_ip: 10.0.1.1/32
+  dest_ip: 10.200.1.1/32
+  dest_port: 3306
   proto: tcp
-  action: permit
-- source_ip: 0.0.0.0/0
-  dest_ip: 0.0.0.0/0
-  proto: ip
   action: permit
