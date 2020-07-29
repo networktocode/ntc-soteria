@@ -20,7 +20,7 @@ logging.getLogger("pybatfish").setLevel(logging.CRITICAL)
 
 class ACLAuditor:
     def __init__(self, config_file):
-        bf_session.host = "127.0.0.1"
+        bf_session.host = "batfish"
         load_questions()
         self.config_file = config_file
 
