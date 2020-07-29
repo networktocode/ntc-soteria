@@ -16,7 +16,7 @@ def write_file(filename, data):
 
 def read_yaml(filename):
     with open(filename) as file:
-        return yaml.load(file, Loader=yaml.FullLoader)
+        return yaml.safe_load(file)
 
 
 def return_rc(results):

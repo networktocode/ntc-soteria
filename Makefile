@@ -19,7 +19,7 @@ flake8: ## Python linting via Flake8.
 	find . -name venv -prune -o -name '*.py' -exec flake8 {} +
 
 yamllint: ## YAML linting via Yamllint.
-	find . \( -name *.yaml -o -name *.yml \) | xargs yamllint
+	find \( -name *.yaml -o -name *.yml \) | xargs yamllint -d "{ignore: docker-compose.yml}"
 
 black: ## Format checking via Black.
 	black --check . --exclude venv/
@@ -30,6 +30,6 @@ pytest: ## Unit tests via Pytest.
 bandit: ## Security checks via Bandit.
 	bandit --exclude ./venv --recursive --config .bandit.yml .
 
-tests: pylint yamllint black pytest bandit pytest ## Format, lint, security and unit tests
+tests: flake8 yamllint black pytest bandit ## Format, lint, security and unit tests
 
 # :%s/^[ ]\+/\t/g - automatically replace all tabs with spaces

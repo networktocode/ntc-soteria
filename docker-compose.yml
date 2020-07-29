@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   ntc-soteria:
-    container_name: acl_auditor
+    container_name: ntc-soteria
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,8 +12,8 @@ services:
     volumes:
       - ./data:/source/data
   batfish:
-      container_name: batfish
-      image: batfish/batfish:latest
-      ports:
-        - 9997:9997
-        - 9996:9996
+    container_name: batfish
+    image: batfish/batfish:latest
+    ports:
+      - 9997:9997
+      - 9996:9996
