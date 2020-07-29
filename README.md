@@ -60,9 +60,8 @@ The reference flow file strucutre is shown below:
 **Example:**
 
 ```
-./acl_auditor/auditor.py -c compare -d data/asa.cfg -r data/flows.yml -a acl-inside 
+./acl_auditor/auditor.py -c compare -d data/asa.cfg -r data/flows.yml -a acl-webfarm 
 ```
-
 
 
 ### Unreachable ACL Entries
@@ -76,7 +75,7 @@ The unreachable acl entry option takes the following inputs:
 ### HTML Report
 An HTML report can be generated with the results. However, this option can only be run when running the `-c all` (check all) option.
 ```
-./acl_auditor/auditor.py -c all -d data/asa.cfg -r data/flows.yml -a acl-inside -o html
+./acl_auditor/auditor.py -c all -d data/asa.cfg -r data/flows.yml -a acl-webfarm -o html
 ```
 Once complete a HTML report will be saved within `./data`. Below shows an example:
 ![alt text](https://github.com/networktocode/batfish-acl-auditor/blob/master/data/report-example.png?raw=true)
