@@ -33,6 +33,7 @@ python-dotenv = "^0.13.0"
 jinja2 = "^2.11.2"
 rope = "^0.17.0"
 tabulate = "^0.8.7"
+click = "^7.1.2"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.8.3"
