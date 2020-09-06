@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 
-import argparse
 import logging
 import sys
+import click
 
 from pybatfish.client.commands import bf_session
 from pybatfish.question import bfq
@@ -77,65 +77,46 @@ class ACLAuditor:
         return bfq.filterLineReachability().answer()
 
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Batfish ACL Auditor")
-    parser.add_argument(
-        "-c",
-        "--check",
-        help="check",
-        required=True,
-        choices=["compare", "unreachable", "all"],
-    )
-    parser.add_argument(
-        "-d", "--device_config", help="device_config", required=False
-    )
-    parser.add_argument(
-        "-r", "--reference_flows", help="reference_flows", required=False
-    )
-    parser.add_argument("-a", "--acl_name", help="acl_name", required=False)
-    parser.add_argument("-o", "--output", help="output", choices=["html"])
-    args = vars(parser.parse_args())
-
-    config = read_file(args["device_config"])
-    acl_auditor = ACLAuditor(config)
+@click.command()
+@click.option(
+    "--check",
+    "-c",
+    type=click.Choice(["compare", "unreachable", "all"]),
+    required=True,
+    help="Audit check type.",
+)
+@click.option("--device_config_file", "-d", type=click.Path(), help="Network device config file.")
+@click.option("--reference_file", "-r", type=click.Path(), help="Flow reference file.")
+@click.option("--acl_name", "-a", help="ACL name.")
+@click.option("--output", "-o", type=click.Choice(["html"]), help="Report output format.")
+def main(check, device_config_file, reference_file, acl_name, output):
+    """NTC-Soteria - ACL Auditor"""
     filter_compare_results = str()
     unreachable_results = str()
 
-    if args["check"] in ["compare", "all"] and (
-        (not args["reference_flows"]) or (not args["acl_name"])
-    ):
-        parser.error("requires --reference_flows and --acl_name")
-    elif args["check"] == "compare":
-        reference_flows = args["reference_flows"]
-        acl_name = args["acl_name"]
+    config = read_file(device_config_file)
+    acl_auditor = ACLAuditor(config)
 
+    if check in ["compare", "all"]:
+        print("== Differential Comparision Audit ==")
         filter_compare_results = acl_auditor.get_acl_differences(
-            reference_flows, acl_name
+            reference_file, acl_name
         )
-
         display_compare_results(filter_compare_results)
-    elif args["check"] == "unreachable":
+    elif check == ["unreachable", "all"]:
+        print("== Unreachable Audit ==")
         unreachable_results = acl_auditor.get_unreachable_lines()
         display_unreachable_results(unreachable_results)
-    elif args["check"] == "all":
-        reference_flows = args["reference_flows"]
-        acl_name = args["acl_name"]
 
-        filter_compare_results = acl_auditor.get_acl_differences(
-            reference_flows, acl_name
-        )
-
-        unreachable_results = acl_auditor.get_unreachable_lines()
-        print("-- Reference Comparision --")
-        display_compare_results(filter_compare_results)
-        print("-- Unreachable ACL Entries --")
-        display_unreachable_results(unreachable_results)
-
-    if args["output"] == "html" and args["check"] == "all":
+    if check == all and output == "html":
         generate_html_report(
             filter_compare_results,
             unreachable_results,
-            read_file(reference_flows),
+            read_file(reference_file),
         )
 
     return_rc([filter_compare_results, unreachable_results])
+
+
+if __name__ == "__main__":
+    main()
