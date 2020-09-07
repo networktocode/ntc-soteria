@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-  ntc-soteria:
+  ntc_soteria:
     container_name: ntc-soteria
     build:
       context: .
@@ -10,7 +10,8 @@ services:
     depends_on:
       - "batfish"
     volumes:
-      - ./data:/source/data
+      - ./data:/local/data
+      - ./acl_auditor:/local/acl_auditor
   batfish:
     container_name: batfish
     image: batfish/batfish:latest
