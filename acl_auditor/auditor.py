@@ -103,7 +103,8 @@ def main(check, device_config_file, reference_file, acl_name, output):
             reference_file, acl_name
         )
         display_compare_results(filter_compare_results)
-    elif check == ["unreachable", "all"]:
+
+    if check in ["unreachable", "all"]:
         print("== Unreachable Audit ==")
         unreachable_results = acl_auditor.get_unreachable_lines()
         display_unreachable_results(unreachable_results)
