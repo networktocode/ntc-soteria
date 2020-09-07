@@ -29,7 +29,7 @@ cd ntc-soteria
 
 docker-compose build
 docker-compose up -d
-docker-compose exec acl_auditor <command>
+docker-compose exec ntc-soteria <command>
 ```
 
 **Note:**
