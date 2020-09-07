@@ -85,10 +85,19 @@ class ACLAuditor:
     required=True,
     help="Audit check type.",
 )
-@click.option("--device_config_file", "-d", type=click.Path(), help="Network device config file.")
-@click.option("--reference_file", "-r", type=click.Path(), help="Flow reference file.")
+@click.option(
+    "--device_config_file",
+    "-d",
+    type=click.Path(),
+    help="Network device config file.",
+)
+@click.option(
+    "--reference_file", "-r", type=click.Path(), help="Flow reference file."
+)
 @click.option("--acl_name", "-a", help="ACL name.")
-@click.option("--output", "-o", type=click.Choice(["html"]), help="Report output format.")
+@click.option(
+    "--output", "-o", type=click.Choice(["html"]), help="Report output format."
+)
 def main(check, device_config_file, reference_file, acl_name, output):
     """NTC-Soteria - ACL Auditor"""
     filter_compare_results = str()
