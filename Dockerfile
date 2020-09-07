@@ -3,14 +3,14 @@ FROM python:3.7.5
 RUN pip install --upgrade pip \
   && pip install poetry
 
-RUN mkdir /source
+RUN mkdir /local
 
-COPY . /source
+COPY . /local
 
-WORKDIR /source
+WORKDIR /local
 RUN poetry config virtualenvs.create false \
   && poetry install --no-interaction --no-ansi
 
-WORKDIR /source
+WORKDIR /local
 
 CMD /bin/bash

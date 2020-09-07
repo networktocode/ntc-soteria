@@ -25,7 +25,7 @@ pytest: ## Unit tests via Pytest.
 	pytest -vvv	
 
 bandit: ## Security checks via Bandit.
-	bandit --exclude --recursive --config .bandit.yml .
+	bandit --recursive --config .bandit.yml .
 
 tests: flake8 yamllint black pytest bandit ## Format, lint, security and unit tests
 
