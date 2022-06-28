@@ -79,4 +79,4 @@ An HTML report can be generated with the results. However, this option can only 
 ```
 Once complete a HTML report will be saved within `./data`. Below shows an example:
 ![alt text](https://github.com/networktocode/batfish-acl-auditor/blob/master/data/report-example.png?raw=true)
-**Note:** The HTML report generated uses the following Material/Bootstrap framework: https://fezvrasta.github.io/bootstrap-material-design/.
+**Note:** The HTML report generated uses the following Material/Bootstrap framework: https://mdbootstrap.com/.
